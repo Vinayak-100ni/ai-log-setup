@@ -146,8 +146,10 @@ nano ~/monitoring/.env.alert
 
 ```bash
 cd ~/monitoring
+python3 -m venv venv
 source venv/bin/activate
 pip install requests pandas scikit-learn
+python3 -c "import requests, pandas, sklearn; print('All OK')"
 ```
 
 ---
