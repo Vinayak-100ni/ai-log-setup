@@ -51,7 +51,7 @@ Your existing dashboard works exactly as before.
 sudo mkdir -p /opt/scripts
 sudo mkdir -p /var/lib/ai-alert
 sudo mkdir -p /var/log/ai-anomalies
-sudo chown $USER:$USER /var/lib/ai-alert /var/log/ai-anomalies
+sudo chown $USER:$USER /var/lib/ai-alert /var/log/ai-anomalies  or sudo chown $(id -un):$(id -gn) /var/lib/ai-alert /var/log/ai-anomalies
 ```
 
 ---
