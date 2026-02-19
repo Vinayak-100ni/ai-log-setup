@@ -59,6 +59,7 @@ sudo chown $USER:$USER /var/lib/ai-alert /var/log/ai-anomalies  or sudo chown $(
 ## STEP 3 — Copy the Python Script
 
 ```bash
+mkdir ~/monitoring/
 cp ai_alert.py ~/monitoring/ai_alert.py
 ```
 
