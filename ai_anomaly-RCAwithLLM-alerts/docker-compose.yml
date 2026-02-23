@@ -1,0 +1,44 @@
+version: '3.8'
+
+# ============================================================
+#  AI Anomaly Detection Engine — Addon
+#  - Connects to remote Prometheus + Loki (different server)
+#  - Uses Claude AI for RCA
+#  - Sends Email alerts
+# ============================================================
+
+networks:
+  ai_anomaly_net:
+    driver: bridge
+
+services:
+
+  ai_anomaly_engine:
+    build:
+      context: ./ai_engine
+    container_name: ai_anomaly_engine
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    networks:
+      - ai_anomaly_net
+    depends_on:
+      - ai_redis
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    extra_hosts:
+      # Allows container to reach host machine or LAN IP
+      - "host.docker.internal:host-gateway"
+
+  ai_redis:
+    image: redis:7-alpine
+    container_name: ai_redis
+    restart: unless-stopped
+    networks:
+      - ai_anomaly_net
+    command: redis-server --maxmemory 64mb --maxmemory-policy allkeys-lru
